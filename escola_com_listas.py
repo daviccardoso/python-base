@@ -4,7 +4,7 @@
 This script creates a report that shows how many kids are enrolled in a specific extracurricular activity, grouping by grade and activity name.
 """
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 __author__ = "Davi Cardoso"
 
 # Grades
@@ -17,9 +17,9 @@ classe_musica = ["Erik", "Carlos", "Maria"]
 classe_danca = ["Gustavo", "Sofia", "Joana", "Antonio"]
 
 atividades = [
-        ('Inglês', classe_ingles),
-        ('Música', classe_musica),
-        ('Dança', classe_danca)
+    ("Inglês", classe_ingles),
+    ("Música", classe_musica),
+    ("Dança", classe_danca),
 ]
 
 for nome_atividade, atividade in atividades:
@@ -34,7 +34,6 @@ for nome_atividade, atividade in atividades:
         elif aluno in sala_2:
             atividade_sala_2.append(aluno)
 
-    print("Alunos da sala 1:", ', '.join(atividade_sala_1))
-    print("Alunos da sala 2:", ', '.join(atividade_sala_2))
+    print("Alunos da sala 1:", ", ".join(atividade_sala_1))
+    print("Alunos da sala 2:", ", ".join(atividade_sala_2))
     print()
-
