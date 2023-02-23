@@ -18,7 +18,7 @@ Execution:
     ./hello.py
 """
 
-__version__ = "0.0.1"
+__version__ = "0.1.2"
 __author__ = "Davi Cardoso"
 __license__ = "Unlicense"
 
@@ -26,11 +26,13 @@ __license__ = "Unlicense"
 import os
 
 current_language = os.getenv("LANG", "en_US")[:5]
-message = "Hello, world!"
+message = {
+    "en_US": "Hello, world!",
+    "pt_BR": "Olá, mundo!",
+    "it_IT": "Ciao, mondo!",
+    "es_ES": "Hola, Mundo!",
+    "fr_FR": "Bonjour, Monde!",
+}
 
-if current_language == "pt_BR":
-    message = "Olá, mundo!"
-elif current_language == "it_IT":
-    message = "Ciao, mondo!"
+print(message[current_language])
 
-print(message)
