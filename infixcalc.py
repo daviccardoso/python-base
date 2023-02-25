@@ -66,7 +66,7 @@ for number in numbers:
         else:
             valid_numbers.append(int(number))
     else:
-        print(f"\nNúmero inválido: '{number}'")
+        print(f"\nNúmero inválido: {number!r}")
         sys.exit(1)
 
 n1, n2 = valid_numbers
