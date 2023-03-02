@@ -25,14 +25,17 @@ Uso:
     n1: 5
     n2: 4
     9
+
+    Os resultados são salvos em `infixcalc.log`
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __author__ = "Davi Cardoso"
 
-import sys
+import sys, os
+from datetime import datetime
 
-valid_operations = {
+math_operations = {
     "sum": lambda x, y: x + y,
     "sub": lambda x, y: x - y,
     "mul": lambda x, y: x * y,
@@ -45,15 +48,18 @@ if not arguments:
     operation = input("Operação: ")
     n1 = input("n1: ")
     n2 = input("n2: ")
-    arguments = [operation, n1, n2]
-elif len(arguments) != 3:
+    log_file_path = input("Arquivo de log de operações (ENTER para ignorar): ")
+    arguments = [operation, n1, n2, log_file_path]
+elif len(arguments) < 3:
     print("\nQuantidade de argumentos inválida.")
-    print("Ex.: sum 5 2")
+    print("Ex.: sum 5 2 [--logfile=log_file_name]")
     sys.exit(1)
 
-operation, *numbers = arguments
+operation, n1, n2, *log_file_path = arguments
+numbers = [n1, n2]
+log_file_path = log_file_path[0] if log_file_path else ""
 
-if operation not in valid_operations:
+if operation not in math_operations:
     print(f"\nOperação inválida: {operation!r}")
     sys.exit(1)
 
@@ -70,5 +76,23 @@ for number in numbers:
         sys.exit(1)
 
 n1, n2 = valid_numbers
+result = math_operations[operation](n1, n2)
+print(f"\nO resultado da operação matemática é {result}.")
 
-print(valid_operations[operation](n1, n2))
+if log_file_path.strip():
+    if "=" in log_file_path:
+        argument_key, argument_value = log_file_path.split("=")
+        if argument_key.lstrip("-").strip() != "logfile":
+            print(f"\nArgumento inválido: {argument_key!r}")
+            sys.exit(1)
+    else:
+        argument_value = log_file_path
+
+    path = os.curdir
+    filepath = os.path.join(path, argument_value)
+    timestamp = datetime.now().isoformat()
+    user = os.getenv("USER", "anonymous")
+
+    with open(filepath, "a") as log_file:
+        log_file.write(f"{timestamp} - {user} - "
+                       f"{operation},{n1},{n2} = {result}\n")
